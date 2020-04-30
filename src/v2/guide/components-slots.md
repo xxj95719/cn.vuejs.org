@@ -63,13 +63,13 @@ Vue 实现了一套内容分发的 API，这套 API 的设计灵感源自 [Web C
 </navigation-link>
 ```
 
-该插槽跟模板的其它地方一样可以访问相同的实例属性 (也就是相同的“作用域”)，而**不能**访问 `<navigation-link>` 的作用域。例如 `url` 是访问不到的：
+该插槽跟模板的其它地方一样可以访问相同的实例 property (也就是相同的“作用域”)，而**不能**访问 `<navigation-link>` 的作用域。例如 `url` 是访问不到的：
 
 ``` html
 <navigation-link url="/profile">
   Clicking here will send you to: {{ url }}
   <!--
-  这里的 `url` 会是 undefined，因为 "/profile" 是
+  这里的 `url` 会是 undefined，因为其 (指该插槽的) 内容是
   _传递给_ <navigation-link> 的而不是
   在 <navigation-link> 组件*内部*定义的。
   -->
@@ -98,7 +98,7 @@ Vue 实现了一套内容分发的 API，这套 API 的设计灵感源自 [Web C
 </button>
 ```
 
-现在当我在一个父级组件中使用 `<submit-button>`  并且不提供任何插槽内容时：
+现在当我在一个父级组件中使用 `<submit-button>` 并且不提供任何插槽内容时：
 
 ```html
 <submit-button></submit-button>

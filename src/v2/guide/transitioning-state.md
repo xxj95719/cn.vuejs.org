@@ -9,16 +9,16 @@ Vue 的过渡系统提供了非常多简单的方法设置进入、离开和列�
 - 数字和运算
 - 颜色的显示
 - SVG 节点的位置
-- 元素的大小和其他的属性
+- 元素的大小和其他的 property
 
 这些数据要么本身就以数值形式存储，要么可以转换为数值。有了这些数值后，我们就可以结合 Vue 的响应式和组件系统，使用第三方库来实现切换元素的过渡状态。
 
 ## 状态动画与侦听器
 
-通过侦听器我们能监听到任何数值属性的数值更新。可能听起来很抽象，所以让我们先来看看使用 [GreenSock](https://greensock.com/) 一个例子：
+通过侦听器我们能监听到任何数值 property 的数值更新。可能听起来很抽象，所以让我们先来看看使用 [GreenSock](https://greensock.com/) 一个例子：
 
 ``` html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
 
 <div id="animated-number-demo">
   <input v-model.number="number" type="number" step="20">
@@ -40,14 +40,14 @@ new Vue({
   },
   watch: {
     number: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue });
+      gsap.to(this.$data, { duration: 0.5, tweenedNumber: newValue });
     }
   }
 })
 ```
 
 {% raw %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
 <div id="animated-number-demo" class="demo">
   <input v-model.number="number" type="number" step="20">
   <p>{{ animatedNumber }}</p>
@@ -66,7 +66,7 @@ new Vue({
   },
   watch: {
     number: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue });
+      gsap.to(this.$data, { duration: 0.5, tweenedNumber: newValue });
     }
   }
 })
@@ -366,7 +366,7 @@ function generatePoints (stats) {
 </style>
 {% endraw %}
 
-上述 demo 背后的代码可以通过[这个 fiddle](https://jsfiddle.net/chrisvfritz/65gLu2b6/) 进行详阅。
+上述 demo 背后的代码可以通过[这个示例](https://codesandbox.io/s/github/vuejs/vuejs.org/tree/master/src/v2/examples/vue-20-dynamic-state-transitions)进行详阅。
 
 ## 把过渡放到组件里
 

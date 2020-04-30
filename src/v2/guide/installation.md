@@ -10,6 +10,10 @@ gz_size: "30.90"
 
 Vue **不支持** IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有[兼容 ECMAScript 5 的浏览器](https://caniuse.com/#feat=es5)。
 
+### 语义化版本控制
+
+Vue 在其所有项目中公布的功能和行为都遵循[语义化版本控制](https://semver.org/lang/zh-CN/)。对于未公布的或内部暴露的行为，其变更会描述在[发布说明](https://github.com/vuejs/vue/releases)中。
+
 ### 更新日志
 
 最新稳定版本：{{vue_version}}
@@ -255,7 +259,7 @@ NODE_ENV=production browserify -g envify -e main.js | uglifyjs -c -m > build.js
 
 ## 开发版本
 
-**重要**: GitHub 仓库的 `/dist` 文件夹只有在新版本发布时才会提交。如果想要使用 GitHub 上 Vue 最新的源码，你需要自己构建！
+**重要**：GitHub 仓库的 `/dist` 文件夹只有在新版本发布时才会提交。如果想要使用 GitHub 上 Vue 最新的源码，你需要自己构建！
 
 ``` bash
 git clone https://github.com/vuejs/vue.git node_modules/vue
@@ -281,3 +285,5 @@ $ bower install vue
 **译者注**
 <a id="footnote-1"></a>[1] 对于中国大陆用户，建议将 NPM 源设置为[国内的镜像](https://npm.taobao.org/)，可以大幅提升安装速度。
 </small>
+
+<!-- zhlint ignore: min+gzip -->

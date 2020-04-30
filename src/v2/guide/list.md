@@ -12,7 +12,7 @@ order: 8
 
 ``` html
 <ul id="example-1">
-  <li v-for="item in items">
+  <li v-for="item in items" :key="item.message">
     {{ item.message }}
   </li>
 </ul>
@@ -34,7 +34,7 @@ var example1 = new Vue({
 
 {% raw %}
 <ul id="example-1" class="demo">
-  <li v-for="item in items">
+  <li v-for="item in items" :key="item.message">
     {{item.message}}
   </li>
 </ul>
@@ -56,7 +56,7 @@ var example1 = new Vue({
 </script>
 {% endraw %}
 
-在 `v-for` 块中，我们可以访问所有父作用域的属性。`v-for` 还支持一个可选的第二个参数，即当前项的索引。
+在 `v-for` 块中，我们可以访问所有父作用域的 property。`v-for` 还支持一个可选的第二个参数，即当前项的索引。
 
 ``` html
 <ul id="example-2">
@@ -81,7 +81,7 @@ var example2 = new Vue({
 
 结果：
 
-{% raw%}
+{% raw %}
 <ul id="example-2" class="demo">
   <li v-for="(item, index) in items">
     {{ parentMessage }} - {{ index }} - {{ item.message }}
@@ -114,7 +114,7 @@ var example2 = new Vue({
 
 ## 在 `v-for` 里使用对象
 
-你也可以用 `v-for` 来遍历一个对象的属性。
+你也可以用 `v-for` 来遍历一个对象的 property。
 
 ``` html
 <ul id="v-for-object" class="demo">
@@ -223,7 +223,7 @@ new Vue({
 
 这个默认的模式是高效的，但是**只适用于不依赖子组件状态或临时 DOM 状态 (例如：表单输入值) 的列表渲染输出**。
 
-为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 `key` 属性：
+为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 `key` attribute：
 
 ``` html
 <div v-for="item in items" v-bind:key="item.id">
@@ -241,9 +241,9 @@ new Vue({
 
 ## 数组更新检测
 
-### 变异方法 (mutation method)
+### 变更方法
 
-Vue 将被侦听的数组的变异方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
+Vue 将被侦听的数组的变更方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
 
 - `push()`
 - `pop()`
@@ -253,11 +253,11 @@ Vue 将被侦听的数组的变异方法进行了包裹，所以它们也将会�
 - `sort()`
 - `reverse()`
 
-你可以打开控制台，然后对前面例子的 `items` 数组尝试调用变异方法。比如 `example1.items.push({ message: 'Baz' })`。
+你可以打开控制台，然后对前面例子的 `items` 数组尝试调用变更方法。比如 `example1.items.push({ message: 'Baz' })`。
 
 ### 替换数组
 
-变异方法，顾名思义，会改变调用了这些方法的原始数组。相比之下，也有非变异 (non-mutating method) 方法，例如 `filter()`、`concat()` 和 `slice()` 。它们不会改变原始数组，而**总是返回一个新数组**。当使用非变异方法时，可以用新数组替换旧数组：
+变更方法，顾名思义，会变更调用了这些方法的原始数组。相比之下，也有非变更方法，例如 `filter()`、`concat()` 和 `slice()`。它们不会变更原始数组，而**总是返回一个新数组**。当使用非变更方法时，可以用新数组替换旧数组：
 
 ``` js
 example1.items = example1.items.filter(function (item) {
@@ -269,107 +269,11 @@ example1.items = example1.items.filter(function (item) {
 
 ### 注意事项
 
-由于 JavaScript 的限制，Vue **不能**检测以下数组的变动：
-
-1. 当你利用索引直接设置一个数组项时，例如：`vm.items[indexOfItem] = newValue`
-2. 当你修改数组的长度时，例如：`vm.items.length = newLength`
-
-举个例子：
-
-``` js
-var vm = new Vue({
-  data: {
-    items: ['a', 'b', 'c']
-  }
-})
-vm.items[1] = 'x' // 不是响应性的
-vm.items.length = 2 // 不是响应性的
-```
-
-为了解决第一类问题，以下两种方式都可以实现和 `vm.items[indexOfItem] = newValue` 相同的效果，同时也将在响应式系统内触发状态更新：
-
-``` js
-// Vue.set
-Vue.set(vm.items, indexOfItem, newValue)
-```
-``` js
-// Array.prototype.splice
-vm.items.splice(indexOfItem, 1, newValue)
-```
-
-你也可以使用 [`vm.$set`](https://cn.vuejs.org/v2/api/#vm-set) 实例方法，该方法是全局方法 `Vue.set` 的一个别名：
-
-``` js
-vm.$set(vm.items, indexOfItem, newValue)
-```
-
-为了解决第二类问题，你可以使用 `splice`：
-
-``` js
-vm.items.splice(newLength)
-```
-
-## 对象变更检测注意事项
-
-还是由于 JavaScript 的限制，**Vue 不能检测对象属性的添加或删除**：
-
-``` js
-var vm = new Vue({
-  data: {
-    a: 1
-  }
-})
-// `vm.a` 现在是响应式的
-
-vm.b = 2
-// `vm.b` 不是响应式的
-```
-
-对于已经创建的实例，Vue 不允许动态添加根级别的响应式属性。但是，可以使用 `Vue.set(object, propertyName, value)` 方法向嵌套对象添加响应式属性。例如，对于：
-
-``` js
-var vm = new Vue({
-  data: {
-    userProfile: {
-      name: 'Anika'
-    }
-  }
-})
-```
-
-你可以添加一个新的 `age` 属性到嵌套的 `userProfile` 对象：
-
-``` js
-Vue.set(vm.userProfile, 'age', 27)
-```
-
-你还可以使用 `vm.$set` 实例方法，它只是全局 `Vue.set` 的别名：
-
-``` js
-vm.$set(vm.userProfile, 'age', 27)
-```
-
-有时你可能需要为已有对象赋值多个新属性，比如使用 `Object.assign()` 或 `_.extend()`。在这种情况下，你应该用两个对象的属性创建一个新的对象。所以，如果你想添加新的响应式属性，不要像这样：
-
-``` js
-Object.assign(vm.userProfile, {
-  age: 27,
-  favoriteColor: 'Vue Green'
-})
-```
-
-你应该这样做：
-
-``` js
-vm.userProfile = Object.assign({}, vm.userProfile, {
-  age: 27,
-  favoriteColor: 'Vue Green'
-})
-```
+由于 JavaScript 的限制，Vue **不能检测**数组和对象的变化。[深入响应式原理](reactivity.html#检测变化的注意事项)中有相关的讨论。
 
 ## 显示过滤/排序后的结果
 
-有时，我们想要显示一个数组经过过滤或排序后的版本，而不实际改变或重置原始数据。在这种情况下，可以创建一个计算属性，来返回过滤或排序后的数组。
+有时，我们想要显示一个数组经过过滤或排序后的版本，而不实际变更或重置原始数据。在这种情况下，可以创建一个计算属性，来返回过滤或排序后的数组。
 
 例如：
 
@@ -392,13 +296,15 @@ computed: {
 
 在计算属性不适用的情况下 (例如，在嵌套 `v-for` 循环中) 你可以使用一个方法：
 
-``` html
-<li v-for="n in even(numbers)">{{ n }}</li>
+```html
+<ul v-for="set in sets">
+  <li v-for="n in even(set)">{{ n }}</li>
+</ul>
 ```
 
-``` js
+```js
 data: {
-  numbers: [ 1, 2, 3, 4, 5 ]
+  sets: [[ 1, 2, 3, 4, 5 ], [6, 7, 8, 9, 10]]
 },
 methods: {
   even: function (numbers) {
@@ -457,7 +363,7 @@ methods: {
 
 上面的代码将只渲染未完成的 todo。
 
-而如果你的目的是有条件地跳过循环的执行，那么可以将 `v-if` 置于外层元素 (或 [`<template>`](conditional.html#在-lt-template-gt-中配合-v-if-条件渲染一整组))上。如：
+而如果你的目的是有条件地跳过循环的执行，那么可以将 `v-if` 置于外层元素 (或 [`<template>`](conditional.html#在-lt-template-gt-中配合-v-if-条件渲染一整组)) 上。如：
 
 ``` html
 <ul v-if="todos.length">
@@ -472,7 +378,7 @@ methods: {
 
 > 这部分内容假定你已经了解[组件](components.html)相关知识。你也完全可以先跳过它，以后再回来查看。
 
-在自定义组件上，你可以像在任何普通元素上一样使用 `v-for` 。
+在自定义组件上，你可以像在任何普通元素上一样使用 `v-for`。
 
 ``` html
 <my-component v-for="item in items" :key="item.id"></my-component>
@@ -518,7 +424,7 @@ methods: {
 </div>
 ```
 
-<p class="tip">注意这里的 `is="todo-item"` 属性。这种做法在使用 DOM 模板时是十分必要的，因为在 `<ul>` 元素内只有 `<li>` 元素会被看作有效内容。这样做实现的效果与 `<todo-item>` 相同，但是可以避开一些潜在的浏览器解析错误。查看 [DOM 模板解析说明](components.html#解析-DOM-模板时的注意事项) 来了解更多信息。</p>
+<p class="tip">注意这里的 `is="todo-item"` attribute。这种做法在使用 DOM 模板时是十分必要的，因为在 `<ul>` 元素内只有 `<li>` 元素会被看作有效内容。这样做实现的效果与 `<todo-item>` 相同，但是可以避开一些潜在的浏览器解析错误。查看 [DOM 模板解析说明](components.html#解析-DOM-模板时的注意事项) 来了解更多信息。</p>
 
 ``` js
 Vue.component('todo-item', {

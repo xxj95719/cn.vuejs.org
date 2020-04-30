@@ -91,7 +91,7 @@ test('Hello', () => {
 - 易于理解
 - 只测试*一个独立单元的工作*
 
-我们在上一个示例的基础上继续构建，同时引入一个<a href="https://zh.wikipedia.org/wiki/工厂方法#工厂">工厂函数 (factory function)</a>使得我们的测试更简洁更易读。这个组件应该：
+我们在上一个示例的基础上继续构建，同时引入一个<a href="https://zh.wikipedia.org/wiki/工厂方法#工厂">工厂函数 (factory function)</a> 使得我们的测试更简洁更易读。这个组件应该：
 
 - 展示一个“Welcome to the Vue.js cookbook”的问候语
 - 提示用户输入用户名
@@ -235,7 +235,7 @@ describe('Foo', () => {
 上述的测试是非常简单的，但是在实际情况下 Vue 组件常常具有其它你想要测试的行为，诸如：
 
 - 调用 API
-- 为 `Vuex` 的 store，commit 或 dispatch 一些 mutation 或 action
+- 为 `Vuex` 的 store，commit 或 dispatch 一些变更或 action
 - 测试用户交互
 
 我们在 Vue Test Utils 的[教程](https://vue-test-utils.vuejs.org/zh/guides/)中提供了更完整的示例展示这些测试。

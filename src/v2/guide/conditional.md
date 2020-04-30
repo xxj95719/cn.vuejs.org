@@ -119,7 +119,7 @@ new Vue({
 </script>
 {% endraw %}
 
-这样也不总是符合实际需求，所以 Vue 为你提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需添加一个具有唯一值的 `key` 属性即可：
+这样也不总是符合实际需求，所以 Vue 为你提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需添加一个具有唯一值的 `key` attribute 即可：
 
 ``` html
 <template v-if="loginType === 'username'">
@@ -163,7 +163,7 @@ new Vue({
 </script>
 {% endraw %}
 
-注意，`<label>` 元素仍然会被高效地复用，因为它们没有添加 `key` 属性。
+注意，`<label>` 元素仍然会被高效地复用，因为它们没有添加 `key` attribute。
 
 ## `v-show`
 
@@ -173,7 +173,7 @@ new Vue({
 <h1 v-show="ok">Hello!</h1>
 ```
 
-不同的是带有 `v-show` 的元素始终会被渲染并保留在 DOM 中。`v-show` 只是简单地切换元素的 CSS 属性 `display`。
+不同的是带有 `v-show` 的元素始终会被渲染并保留在 DOM 中。`v-show` 只是简单地切换元素的 CSS property `display`。
 
 <p class="tip">注意，`v-show` 不支持 `<template>` 元素，也不支持 `v-else`。</p>
 
@@ -191,4 +191,4 @@ new Vue({
 
 <p class="tip">**不推荐**同时使用 `v-if` 和 `v-for`。请查阅[风格指南](/v2/style-guide/#避免-v-if-和-v-for-用在一起-必要)以获取更多信息。</p>
 
-当 `v-if` 与 `v-for` 一起使用时，`v-for` 具有比 `v-if` 更高的优先级。请查阅[列表渲染指南](list.html#v-for-with-v-if) 以获取详细信息。
+当 `v-if` 与 `v-for` 一起使用时，`v-for` 具有比 `v-if` 更高的优先级。请查阅[列表渲染指南](list.html#v-for-with-v-if)以获取详细信息。
